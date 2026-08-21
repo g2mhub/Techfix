@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-techfix}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-techfix}
+      POSTGRES_DB: ${POSTGRES_DB:-techfix}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-techfix} -d ${POSTGRES_DB:-techfix}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8432:8432"
+    environment:
+      # Sobrescreva via env ou .env (POSTGRES_USER/PASSWORD/DB) antes do `docker compose up`.
+      DATABASE_URL: postgresql://${POSTGRES_USER:-techfix}:${POSTGRES_PASSWORD:-techfix}@db:5432/${POSTGRES_DB:-techfix}
+      PORT: "8432"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

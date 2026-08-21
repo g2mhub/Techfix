@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>TechFix · Gestão de Ordens de Serviço</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23FF8C00'/%3E%3Cpath d='M14.2 5.8a4.6 4.6 0 0 0-6 5.9L3.5 16.4 7.6 20.5l4.7-4.7a4.6 4.6 0 0 0 5.9-6l-3 3-3.3-.8-.8-3.3z' fill='%231a1200'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/print.css">
+  <style>
+    /* evita flash do shell enquanto o boot valida a sessão no backend */
+    body.auth-pending .app { visibility: hidden; }
+  </style>
+</head>
+<body class="auth-pending">
+  <div class="app">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <div class="brand-logo" id="brandLogo"></div>
+        <div class="brand-text"><strong>TechFix</strong><span>Ordens de Serviço</span></div>
+      </div>
+      <nav class="sidebar__nav" id="sidebarNav"></nav>
+      <div class="sidebar__footer">
+        <div class="sidebar__version">v2.0 · SQLite + sessão segura</div>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn topbar__menu" id="btnMenu" title="Menu"></button>
+        <div class="topbar__crumb" id="topbarCrumb"></div>
+        <div class="topbar__actions">
+          <button class="btn btn--filled topbar__new" id="btnNewTop">Nova OS</button>
+          <div class="topbar__user" id="topbarUser" title="Sua conta">
+            <div class="user-avatar" id="userAvatar">?</div>
+            <div class="topbar__user-label">
+              <strong id="userName">—</strong>
+              <span id="userRole">—</span>
+            </div>
+          </div>
+          <div class="user-menu" id="userMenu">
+            <button class="icon-btn" id="btnUserMenu" title="Menu da conta"></button>
+            <div class="user-menu__drop" id="userMenuDrop"></div>
+          </div>
+        </div>
+      </header>
+      <div class="content">
+        <div id="view" class="view"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== Overlays ===== -->
+  <div id="dialogRoot"></div>
+  <div id="snackbarRoot" class="snack-wrap"></div>
+  <div id="printRoot" class="print-root"></div>
+
+  <script src="js/core/store.js"></script>
+  <script src="js/core/auth.js"></script>
+  <script src="js/core/ui.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/ordens.js"></script>
+  <script src="js/views/orcamentos.js"></script>
+  <script src="js/views/produtos.js"></script>
+  <script src="js/views/clientes.js"></script>
+  <script src="js/views/relatorios.js"></script>
+  <script src="js/views/login.js"></script>
+  <script src="js/views/usuarios.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

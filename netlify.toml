@@ -1,0 +1,20 @@
+# =============================================================
+# TechFix OS — configuração de build/deploy no Netlify
+#
+# Arquitetura:
+#   - Frontend estático (index.html/css/js) publicado em `public/`
+#   - Backend: Supabase (PostgreSQL + API REST)
+#   - O frontend se comunica diretamente com o Supabase via API REST
+#
+# =============================================================
+
+[build]
+  # Copia a UI estática (raiz do repo) para a pasta publicada.
+  command = "mkdir -p public && cp index.html public/ && cp -r css public/ && cp -r js public/"
+  publish = "public"
+
+# SPA: qualquer rota que não exista como arquivo volta para o index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
