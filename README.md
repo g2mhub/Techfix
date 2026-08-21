@@ -61,7 +61,7 @@ e banco de dados **SQLite** (dev) ou **PostgreSQL via Supabase** (produção).
 | Segurança | bcrypt, sessões server-side, cookies `HttpOnly`, CSRF, rate limiting |
 | Testes | pytest (50 testes) |
 | CI/CD | GitHub Actions |
-| Deploy | Netlify (frontend) + Supabase (backend + banco) |
+| Deploy | Netlify (frontend) + Render (API) + Supabase (banco) |
 
 ## Requisitos
 
@@ -97,13 +97,14 @@ alterável no menu do usuário → **Alterar minha senha**):
 |---|---|
 | `admin` | `123456` |
 
-## Deploy: Netlify (frontend) + Supabase (backend + banco)
+## Deploy: Netlify (frontend) + Render (API) + Supabase (banco)
 
-O **Netlify** publica o frontend estático (`index.html`/`css`/`js`). O **Supabase**
-fornece o backend (PostgreSQL gerenciado + API REST via PostgREST).
+O **Netlify** publica o frontend estático (`index.html`/`css`/`js`) e faz
+**proxy** de `/api/*` para a API Flask hospedada no **Render**. O **Supabase**
+fornece o banco PostgreSQL gerenciado (plano gratuito).
 
-> **Por que Supabase?** Banco permanente (grátis), dashboard com SQL editor,
-> backup automático e API REST via PostgREST.
+> **Por que Render + Supabase?** O Render hospeda o Flask (backend Python) gratuitamente.
+> O Supabase oferece banco permanente (grátis), dashboard com SQL editor e backup automático.
 
 ### Configurar o Supabase
 
@@ -132,9 +133,11 @@ O script exporta todos os dados, cria o schema no Supabase e valida a migração
 ### Deploy
 
 1. Suba o repositório para o GitHub.
-2. **Netlify**: importe o repo (Add new site → Import an existing project).
-3. Configure as variáveis de ambiente no Netlify (veja abaixo).
-4. **Deploy** — o Netlify publica o frontend e o Supabase roda o backend + banco.
+2. **Render**: crie um serviço web (New → Web Service), conecte o repo e defina
+   `DATABASE_URL` com a URI do Supabase.
+3. **Netlify**: importe o repo (Add new site → Import an existing project).
+4. Em `netlify.toml`, troque o domínio do proxy pela URL do Render.
+5. **Deploy** — o Netlify publica o frontend e o Render serve a API.
 
 ## Variáveis de ambiente
 

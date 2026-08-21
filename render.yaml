@@ -1,0 +1,23 @@
+# =============================================================
+# TechFix OS — API backend no Render
+#
+# Arquitetura:
+#   Netlify (frontend estatico) -> Render (Flask API) -> Supabase (banco)
+#
+# Deploy:
+#   1. No Render, crie um servico web (New > Web Service)
+#   2. Conecte o repositorio GitHub
+#   3. Defina a env var DATABASE_URL com a URI do Supabase
+#   4. Configure build/start commands conforme abaixo
+#   5. No Netlify, configure o proxy para a URL do Render
+# =============================================================
+
+services:
+  - type: web
+    name: techfix-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    # Defina DATABASE_URL nas env vars do servico no dashboard do Render
+    # Exemplo: postgresql://postgres.xxx@aws-0-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require
