@@ -1,0 +1,4 @@
+flask>=3.1
+bcrypt>=4.1
+psycopg2-binary>=2.9
+serverless-wsgi>=3.1.0
